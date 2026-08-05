@@ -32,12 +32,30 @@
     h1, h2, h3, .heading { font-family: 'Plus Jakarta Sans', sans-serif; }
 
     .hero-bg {
-      background-color: #ffffff;
-      background-image:
-        radial-gradient(ellipse at 10% 30%, rgba(59,130,246,0.18) 0%, transparent 55%),
-        radial-gradient(ellipse at 90% 10%, rgba(14,165,233,0.15) 0%, transparent 50%),
-        radial-gradient(ellipse at 50% 90%, rgba(37,99,235,0.10) 0%, transparent 50%);
+      position: relative;
+      overflow: hidden;
+      /* base tuned so that, under the 0.55 white overlay, bars land on the
+         section blue (#eff6ff -> #e0f2fe) used elsewhere on the page */
+      background: linear-gradient(180deg, #d6e6ff 0%, #bfe2fb 100%);
     }
+    /* Letterboxed building photo layer */
+    .hero-bg::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: url('assets/images/secanefront.png') center center / contain no-repeat;
+      filter: blur(3px);
+      z-index: 0;
+    }
+    /* Light overlay to keep text legible */
+    .hero-bg::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(255,255,255,0.55);
+      z-index: 1;
+    }
+    .hero-bg > * { position: relative; z-index: 2; }
 
     .nav-link {
       font-family: 'Inter', sans-serif;
@@ -130,9 +148,11 @@
   <header class="flex items-center justify-between px-8 py-5 bg-white border-b border-gray-100 sticky top-0 z-20" style="backdrop-filter:blur(8px);">
     <a href="#" class="heading font-bold text-lg" style="color:#0f172a; letter-spacing:-0.01em;">Secane Dental</a>
     <nav class="hidden md:flex items-center space-x-8">
+      <a href="#services" class="nav-link">Services</a>
       <a href="#dentist" class="nav-link">Our Dentist</a>
+      <a href="#insurance" class="nav-link">Insurance</a>
       <a href="#contact" class="nav-link">Contact</a>
-      <a href="https://bookit.dentrixascend.com/soe/new/dental?pid=ASC8000000001728&mode=externalLink" class="cta-btn">Book Appointment</a>
+      <a href="book-appointment/" class="cta-btn">Book Appointment</a>
     </nav>
     <div class="md:hidden">
       <button onclick="toggleMenu()" class="focus:outline-none text-gray-500 hover:text-blue-600">
@@ -144,9 +164,11 @@
   </header>
 
   <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-gray-100 px-6 py-4 space-y-3 text-center z-10">
+    <a href="#services" class="block nav-link py-2">Services</a>
     <a href="#dentist" class="block nav-link py-2">Our Dentist</a>
+    <a href="#insurance" class="block nav-link py-2">Insurance</a>
     <a href="#contact" class="block nav-link py-2">Contact</a>
-    <a href="https://bookit.dentrixascend.com/soe/new/dental?pid=ASC8000000001728&mode=externalLink" class="block cta-btn my-2">Book Appointment</a>
+    <a href="book-appointment/" class="block cta-btn my-2">Book Appointment</a>
   </div>
 
   <!-- Announcement Banner -->
@@ -160,18 +182,63 @@
 
   <!-- Hero -->
   <section class="hero-bg flex flex-col items-center justify-center text-center min-h-screen px-6 py-24">
-    <span class="pill-tag">Serving the community since the 1960s</span>
+    <span class="pill-tag" style="background:rgba(29,78,216,0.92); border-color:rgba(29,78,216,0.92); color:#ffffff;">Serving the community since the 1960s</span>
     <h1 class="heading text-5xl md:text-6xl font-extrabold mb-6 leading-tight" style="color:#0f172a; letter-spacing:-0.02em;">
       Welcome to<br>
       <span style="background:linear-gradient(90deg,#1d4ed8,#0ea5e9);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Secane Dental</span>
     </h1>
-    <p class="max-w-2xl mx-auto text-base md:text-lg leading-relaxed text-gray-500">
+    <p class="max-w-2xl mx-auto text-base md:text-lg leading-relaxed" style="color:#000000;">
       Proudly serving the local community for over six decades by providing quality, affordable dental care right in the neighborhood.
     </p>
-    <a href="https://bookit.dentrixascend.com/soe/new/dental?pid=ASC8000000001728&mode=externalLink" class="mt-10 cta-btn text-base px-8 py-3">Book Appointment</a>
-    <p class="mt-6 text-base md:text-lg text-gray-500">
+    <a href="book-appointment/" class="mt-10 cta-btn text-base px-8 py-3">Book Appointment</a>
+    <p class="mt-6 text-base md:text-lg" style="color:#000000;">
       Or call us at <a href="tel:6102376848" class="font-semibold hover:underline" style="color:#1d4ed8;">(610) 237-6848</a>
     </p>
+  </section>
+
+  <!-- Services -->
+  <section id="services" class="px-6 py-24 text-center bg-white">
+    <span class="pill-tag">What We Offer</span>
+    <h2 class="heading text-3xl md:text-4xl font-bold mb-1" style="color:#0f172a;">Our Services</h2>
+    <div class="divider" style="margin-bottom: 3rem;"></div>
+
+    <div class="flex flex-col md:flex-row justify-center max-w-4xl mx-auto gap-6">
+
+      <!-- General & Cosmetic -->
+      <div class="card p-8 flex-1 text-left">
+        <div class="icon-circle mb-5">
+          <svg class="w-4 h-4" fill="none" stroke="#1d4ed8" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+        </div>
+        <h3 class="heading text-xl font-bold mb-2" style="color:#0f172a;">General &amp; Cosmetic Dentistry</h3>
+        <p class="text-gray-500 leading-relaxed text-sm md:text-base mb-4">
+          We perform most general and cosmetic dentistry procedures to keep your smile healthy and bright.
+        </p>
+        <ul class="space-y-2 text-sm text-gray-600">
+          <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full" style="background:#1d4ed8;"></span>Root canals &amp; fillings</li>
+          <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full" style="background:#1d4ed8;"></span>Teeth whitening</li>
+          <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full" style="background:#1d4ed8;"></span>Veneers</li>
+          <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full" style="background:#1d4ed8;"></span>Invisalign&trade;</li>
+        </ul>
+      </div>
+
+      <!-- Advanced -->
+      <div class="card p-8 flex-1 text-left">
+        <div class="icon-circle mb-5">
+          <svg class="w-4 h-4" fill="none" stroke="#1d4ed8" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+        </div>
+        <h3 class="heading text-xl font-bold mb-2" style="color:#0f172a;">Advanced Dentistry</h3>
+        <p class="text-gray-500 leading-relaxed text-sm md:text-base mb-4">
+          For more complex needs, our advanced dentistry services help restore function and confidence.
+        </p>
+        <ul class="space-y-2 text-sm text-gray-600">
+          <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full" style="background:#1d4ed8;"></span>Implants</li>
+          <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full" style="background:#1d4ed8;"></span>Crowns</li>
+          <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full" style="background:#1d4ed8;"></span>Bridges</li>
+          <li class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full" style="background:#1d4ed8;"></span>Extractions</li>
+        </ul>
+      </div>
+
+    </div>
   </section>
 
   <!-- Meet Our Dentist -->
@@ -190,8 +257,21 @@
     </div>
   </section>
 
+  <!-- Insurances -->
+  <section id="insurance" class="px-6 py-24 text-center bg-white">
+    <span class="pill-tag">Insurance</span>
+    <h2 class="heading text-3xl md:text-4xl font-bold mb-1" style="color:#0f172a;">We Accept Most Insurances<span style="color:#1d4ed8;">*</span></h2>
+    <div class="divider" style="margin-bottom: 3rem;"></div>
+
+    <div class="card max-w-2xl mx-auto p-10">
+      <p class="text-sm text-gray-500 leading-relaxed">
+        <span style="color:#1d4ed8;">*</span> We are currently not in network for Keystone and Health Partners, but we offer competitive fee-for-service alternatives. Just ask our front desk.
+      </p>
+    </div>
+  </section>
+
   <!-- Contact -->
-  <section id="contact" class="px-6 py-24 text-center bg-white">
+  <section id="contact" class="sections-bg px-6 py-24 text-center">
     <span class="pill-tag">Get In Touch</span>
     <h2 class="heading text-3xl md:text-4xl font-bold mb-1" style="color:#0f172a;">Contact Us</h2>
     <div class="divider" style="margin-bottom: 3rem;"></div>
