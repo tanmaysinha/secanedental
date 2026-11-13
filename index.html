@@ -38,12 +38,13 @@
          section blue (#eff6ff -> #e0f2fe) used elsewhere on the page */
       background: linear-gradient(180deg, #d6e6ff 0%, #bfe2fb 100%);
     }
-    /* Letterboxed building photo layer */
+    /* Building photo layer, scaled to fill the hero (negative inset hides
+       the soft edge the blur would otherwise leave) */
     .hero-bg::before {
       content: "";
       position: absolute;
-      inset: 0;
-      background: url('assets/images/secanefront.png') center center / contain no-repeat;
+      inset: -6px;
+      background: url('assets/images/secanefront.png') center center / cover no-repeat;
       filter: blur(3px);
       z-index: 0;
     }
